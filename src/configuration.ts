@@ -7,6 +7,7 @@ import * as swagger from '@midwayjs/swagger';
 import * as orm from '@midwayjs/typeorm';
 import * as staticFile from '@midwayjs/static-file';
 import * as upload from '@midwayjs/upload';
+import * as crossDomain from '@midwayjs/cross-domain';
 import { join } from 'path';
 import { DefaultErrorFilter } from './filter/default.filter';
 import { NotFoundFilter } from './filter/notfound.filter';
@@ -20,6 +21,7 @@ import { ReportMiddleware } from './middleware/report.middleware';
     orm,
     staticFile,
     upload,
+    crossDomain,
     {
       component: info,
       enabledEnvironment: ['local'],

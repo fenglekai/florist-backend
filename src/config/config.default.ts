@@ -42,4 +42,26 @@ export default {
     // 仅在匹配路径到 /api/upload 的时候去解析 body 中的文件信息
     match: /\/api\/static\/upload/,
   },
+  midwayLogger: {
+    clients: {
+      typeormLogger: {
+        fileLogName: 'midway-typeorm.log',
+        enableError: false,
+        level: 'debug',
+      },
+    },
+  },
+  cors: {
+    origin: (request: { header: { origin: string } }) => {
+      const origin = request.header.origin;
+      const whiteList = [
+        'http://192.168.213.19:10086',
+        'https://florist.devkai.site',
+      ];
+      if (whiteList.includes(origin)) {
+        return origin;
+      }
+      return 'https://florist.devkai.site';
+    },
+  },
 } as MidwayConfig;

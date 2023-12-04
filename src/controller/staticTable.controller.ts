@@ -1,4 +1,5 @@
 import {
+  App,
   Body,
   Context,
   Controller,
@@ -9,6 +10,8 @@ import {
   Post,
   Put,
 } from '@midwayjs/core';
+import { Application } from '@midwayjs/koa';
+import fs = require('fs');
 import { IdsDTO } from '../dto/goods.dto';
 import { StaticTableService } from '../service/staticTable.service';
 import { StaticTableDTO } from '../dto/staticTable.dto';
@@ -20,6 +23,9 @@ export class StaticTableController {
 
   @Inject()
   staticTableService: StaticTableService;
+
+  @App()
+  app: Application;
 
   @Get('/list')
   async list() {
@@ -46,5 +52,23 @@ export class StaticTableController {
   ) {
     await this.staticTableService.delete(IdsDTO.ids);
     return { success: true, message: 'OK' };
+  }
+
+  @Get('/publicList')
+  async publicList() {
+    try {
+      const publicDir = this.app.getAppDir() + '/public';
+      const res: string[] = await new Promise((resolve, reject) => {
+        fs.readdir(publicDir, (err, files) => {
+          if (err) {
+            return reject('Unable to scan directory: ' + err);
+          }
+          resolve(files);
+        });
+      });
+      return { success: true, message: 'OK', data: res };
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

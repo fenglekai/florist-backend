@@ -1,0 +1,29 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Public</title>
+  </head>
+  <body>
+    <h1>Static</h1>
+    <ul id="file-list"></ul>
+    <script>
+      const fileList = document.getElementById('file-list')
+      fetch('/api/static/publicList')
+        .then(response => response.json())
+        .then(data => {
+          data
+            .data
+            .forEach((item) => {
+              const liDom = document.createElement('li')
+              const aDom = document.createElement('a')
+              aDom.href = '/public/' + item
+              aDom.innerText = item;
+              aDom.target = '_blank'
+              liDom.appendChild(aDom)
+              fileList.appendChild(liDom)
+            })
+        });
+    </script>
+  </body>
+</html>

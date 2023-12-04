@@ -1,0 +1,12 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Florist</title>
+  </head>
+  <body>
+    <h1>Hello Midwayjs!</h1>
+    <br/>Swagger path: <a target="_blank" href="http://127.0.0.1:7001/swagger-ui/index.html">http://127.0.0.1:7001/swagger-ui/index.html</a>
+    <br/>staticFile: <a href="http://127.0.0.1:7001/view/public">http://127.0.0.1:7001/view/public</a>
+  </body>
+</html>

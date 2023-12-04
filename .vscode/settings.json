@@ -5,6 +5,7 @@
         "midwayjs",
         "mwts",
         "tsbuildinfo",
-        "typeorm"
+        "typeorm",
+        "nunjucks"
     ]
 }

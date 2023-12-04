@@ -1,20 +1,19 @@
 import {
-  App,
   Body,
   Context,
   Controller,
   Del,
+  Fields,
+  Files,
   Get,
   Inject,
-  Param,
   Post,
-  Put,
+  httpError,
 } from '@midwayjs/core';
-import { Application } from '@midwayjs/koa';
-import fs = require('fs');
 import { IdsDTO } from '../dto/goods.dto';
 import { StaticTableService } from '../service/staticTable.service';
-import { StaticTableDTO } from '../dto/staticTable.dto';
+import { FileItem, UploadDTO } from '../dto/staticTable.dto';
+import { ApiBody } from '@midwayjs/swagger';
 
 @Controller('/static')
 export class StaticTableController {
@@ -24,24 +23,9 @@ export class StaticTableController {
   @Inject()
   staticTableService: StaticTableService;
 
-  @App()
-  app: Application;
-
   @Get('/list')
   async list() {
     const res = await this.staticTableService.find();
-    return { success: true, message: 'OK', data: res };
-  }
-
-  @Post('/add')
-  async add(@Body() staticDTO: StaticTableDTO) {
-    const res = await this.staticTableService.add(staticDTO.src);
-    return res;
-  }
-
-  @Put('/update/:id')
-  async update(@Body() staticDTO: StaticTableDTO, @Param('id') id: number) {
-    const res = await this.staticTableService.update(id, staticDTO.src);
     return { success: true, message: 'OK', data: res };
   }
 
@@ -56,19 +40,23 @@ export class StaticTableController {
 
   @Get('/publicList')
   async publicList() {
-    try {
-      const publicDir = this.app.getAppDir() + '/public';
-      const res: string[] = await new Promise((resolve, reject) => {
-        fs.readdir(publicDir, (err, files) => {
-          if (err) {
-            return reject('Unable to scan directory: ' + err);
-          }
-          resolve(files);
-        });
-      });
-      return { success: true, message: 'OK', data: res };
-    } catch (error) {
-      console.error(error);
+    const res = await this.staticTableService.getPublicFiles();
+    return { success: true, message: 'OK', data: res };
+  }
+
+  @Post('/upload')
+  @ApiBody({ description: 'files' })
+  @ApiBody({ description: 'fields', type: UploadDTO })
+  async upload(@Files() files: FileItem[], @Fields() fields: UploadDTO) {
+    if (!files.length) throw new httpError.BadRequestError('上传文件列表为空');
+    for (let i = 0; i < files.length; i++) {
+      const item = files[i];
+      await this.staticTableService.addPublicFile(
+        fields.user,
+        item.filename,
+        item.data
+      );
     }
+    return { success: true, message: 'OK' };
   }
 }

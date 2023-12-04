@@ -6,3 +6,22 @@ export class StaticTableDTO {
   @Rule(RuleType.string().required())
   src: string;
 }
+
+export class UploadDTO {
+  @ApiProperty()
+  @Rule(RuleType.string().required())
+  user: string;
+
+  @ApiProperty({
+    type: 'array',
+    items: { type: 'file', format: 'binary' },
+  })
+  files: any[];
+}
+
+export interface FileItem {
+  filename: string;
+  data: string;
+  fieldName: string;
+  mimeType: string;
+}

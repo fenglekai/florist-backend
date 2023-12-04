@@ -10,7 +10,7 @@ describe.only('test/db.test.ts', () => {
     const service = await app
       .getApplicationContext()
       .getAsync<GoodsService>(GoodsService);
-    const result = await service.save({
+    const result = await service.add({
       name: 'string',
       description: 'string',
       price: 0,

@@ -35,4 +35,7 @@ $ npm start
 
 - @midwayjs/swagger
 - @midwayjs/typeorm
-- mariadb
+- @midwayjs/validate
+- @midwayjs/static-file
+- @midwayjs/upload
+- @midwayjs/view-nunjucks

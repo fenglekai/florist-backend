@@ -39,3 +39,4 @@ $ npm start
 - @midwayjs/static-file
 - @midwayjs/upload
 - @midwayjs/view-nunjucks
+- @midwayjs/cross-domain

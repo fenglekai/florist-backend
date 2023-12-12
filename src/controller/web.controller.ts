@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from '@midwayjs/core';
+import { Controller, Get, Inject, Query } from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { GoodsService } from '../service/goods.service';
 
@@ -14,8 +14,8 @@ export class HomeController {
 
   // 首页列表
   @Get('/homeList')
-  async homeList() {
-    const data = await this.goodsService.find();
+  async homeList(@Query('keyword') keyword: string) {
+    const data = await this.goodsService.find(keyword);
     const res = data.map(item => {
       return {
         id: item.id,

@@ -55,10 +55,19 @@ export class GoodsService {
   }
 
   // 查询商品
-  async find() {
-    const loadedGoods = await this.goodsModel.find({
-      relations: ['cate', 'static_table'],
-    });
+  async find(query?: string) {
+    const queryBuilder = this.goodsModel
+      .createQueryBuilder('goods')
+      .leftJoinAndSelect('goods.cate', 'cate')
+      .leftJoinAndSelect('goods.static_table', 'static_table');
+
+    if (query) {
+      queryBuilder.where(
+        `goods.name LIKE '%${query}%' OR goods.description LIKE '%${query}%'`
+      );
+    }
+
+    const loadedGoods = await queryBuilder.getMany();
     return loadedGoods;
   }
 

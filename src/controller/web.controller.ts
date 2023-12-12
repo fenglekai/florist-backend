@@ -3,7 +3,7 @@ import { Context } from '@midwayjs/koa';
 import { GoodsService } from '../service/goods.service';
 
 @Controller('/web')
-export class HomeController {
+export class WebController {
   // 注入上下文对象
   @Inject()
   ctx: Context;

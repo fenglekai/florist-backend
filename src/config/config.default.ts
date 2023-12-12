@@ -64,4 +64,13 @@ export default {
       return 'https://florist.devkai.site';
     },
   },
+  jwt: {
+    secret: 'midwayjs.florist', // fs.readFileSync('xxxxx.key')
+    expiresIn: '2d', // https://github.com/vercel/ms
+  },
+  swagger: {
+    auth: {
+      authType: 'bearer',
+    },
+  },
 } as MidwayConfig;

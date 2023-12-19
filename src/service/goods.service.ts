@@ -71,6 +71,15 @@ export class GoodsService {
     return loadedGoods;
   }
 
+  // 查询商品
+  async findOne(id: number) {
+    const result = this.goodsModel.findOne({
+      relations: ['cate', 'static_table'],
+      where: { id },
+    });
+    return result;
+  }
+
   // 更新商品
   async update(id: number, goodsDTO: GoodsDTO) {
     const { cate, static_table } = this.setGoodsRelationEntity(goodsDTO);

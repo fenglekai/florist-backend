@@ -11,7 +11,9 @@ import {
 import { Context } from '@midwayjs/koa';
 import { GoodsService } from '../service/goods.service';
 import { GoodsDTO, IdsDTO } from '../dto/goods.dto';
+import { ApiBearerAuth } from '@midwayjs/swagger';
 
+@ApiBearerAuth()
 @Controller('/goods')
 export class GoodsController {
   // 注入上下文对象

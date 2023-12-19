@@ -13,8 +13,9 @@ import {
 import { IdsDTO } from '../dto/goods.dto';
 import { StaticTableService } from '../service/staticTable.service';
 import { FileItem, UploadDTO } from '../dto/staticTable.dto';
-import { ApiBody } from '@midwayjs/swagger';
+import { ApiBearerAuth, ApiBody } from '@midwayjs/swagger';
 
+@ApiBearerAuth()
 @Controller('/static')
 export class StaticTableController {
   @Inject()

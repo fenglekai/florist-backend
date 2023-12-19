@@ -12,7 +12,9 @@ import {
 import { CategoryService } from '../service/category.service';
 import { IdsDTO } from '../dto/goods.dto';
 import { CategoryDTO } from '../dto/category.dto';
+import { ApiBearerAuth } from '@midwayjs/swagger';
 
+@ApiBearerAuth()
 @Controller('/cate')
 export class CategoryController {
   @Inject()

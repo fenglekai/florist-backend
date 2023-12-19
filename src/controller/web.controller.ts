@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query } from '@midwayjs/core';
+import { Controller, Get, Inject, Param, Query } from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { GoodsService } from '../service/goods.service';
 
@@ -44,6 +44,23 @@ export class WebController {
         src: item.static_table.length > 0 ? item.static_table[0].src : '',
       };
     });
+    return { success: true, message: 'OK', data: res };
+  }
+
+  // 商品详情
+  @Get('/productDetail/:id')
+  async productDetail(@Param('id') id: number) {
+    const data = await this.goodsService.findOne(id);
+    console.log(data);
+    const res = {
+      id: data.id,
+      title: data.name,
+      description: data.description,
+      price: data.price,
+      like_num: data.like_num,
+      cate: data.cate.name,
+      staticList: data.static_table.map(item => item.src),
+    };
     return { success: true, message: 'OK', data: res };
   }
 }

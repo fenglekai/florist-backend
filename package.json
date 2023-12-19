@@ -44,7 +44,7 @@
     "start": "NODE_ENV=production node ./bootstrap.js",
     "dev": "cross-env NODE_ENV=local midway-bin dev --ts",
     "test": "midway-bin test --ts",
-    "test:db": "midway-bin test -f test/db.test.ts",
+    "test:db": "midway-bin test --ts -f test/db.test.ts",
     "cov": "midway-bin cov --ts",
     "lint": "mwts check",
     "lint:fix": "mwts fix",

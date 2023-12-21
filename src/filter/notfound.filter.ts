@@ -5,7 +5,7 @@ import { Context } from '@midwayjs/koa';
 export class NotFoundFilter {
   async catch(err: MidwayHttpError, ctx: Context) {
     // 404 错误会到这里
-    ctx.redirect('/404.html');
-    return { message: '404, ' + ctx.path };
+    ctx.status = err.status || 404;
+    return { success: false, message: '404, ' + ctx.path };
   }
 }

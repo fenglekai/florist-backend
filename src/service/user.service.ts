@@ -13,9 +13,11 @@ export class UserService {
   @Inject()
   grpcClients: Clients;
 
-  async add(name: string) {
+  async add(uuid: string, username: string) {
     const user = new User();
-    user.username = name;
+    user.uuid = uuid;
+    user.username = username;
+    user.login_num = 0;
     const result = await this.userModel.save(user);
     return result;
   }
@@ -25,22 +27,27 @@ export class UserService {
     return result;
   }
 
-  async findOne(id: number) {
-    const result = await this.userModel.findOne({ where: { id } });
+  async findOne(uuid: string) {
+    const result = await this.userModel.findOne({ where: { uuid } });
     return result;
   }
 
   async login(username: string, password: string) {
-    // 获取服务
     const greeterService =
       this.grpcClients.getService<user.GreeterClient>('user.Greeter');
-    // 调用服务
     const result = await greeterService.login().sendMessage({
       username,
       password,
     });
-    // 返回结果
-    return result;
+    const { userId, authorization } = result.data;
+    let findUser = await this.findOne(userId);
+    if (!findUser) {
+      findUser = await this.add(userId, username);
+    } else {
+      findUser.login_num++;
+      await this.userModel.save(findUser);
+    }
+    return { ...findUser, authorization };
   }
 
   async verify(code: string) {

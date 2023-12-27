@@ -15,7 +15,8 @@ export class UserController {
   @Post('/login')
   async login(@Body() user: UserDTO) {
     const { username, password } = user;
-    const data = this.userService.login(username, password);
+    const data = await this.userService.login(username, password);
+    this.ctx.set('authorization', data.authorization);
     return data;
   }
 

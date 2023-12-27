@@ -2,7 +2,7 @@ import { close, createApp } from '@midwayjs/mock';
 import { UserService } from '../../src/service/user.service';
 import { Framework, IMidwayKoaApplication } from '@midwayjs/koa';
 
-describe('UserService', () => {
+describe('用户服务', () => {
   let app: IMidwayKoaApplication;
 
   beforeAll(async () => {
@@ -13,13 +13,22 @@ describe('UserService', () => {
     await close(app);
   });
 
-  it('user service login', async () => {
+  it('登录', async () => {
     const userService = await app
-      .getApplicationContext()
-      .getAsync<UserService>(UserService);
+      .createAnonymousContext()
+      .requestContext.getAsync<UserService>(UserService);
     const result = await userService.login('test123', '123456');
 
-    expect(result.success).toEqual(true);
-    expect(result.message).toEqual('OK');
+    expect(result.uuid).not.toBeUndefined();
+    expect(result.uuid).not.toBeNull();
+  });
+
+  it('查找用户', async () => {
+    const userService = await app
+      .createAnonymousContext()
+      .requestContext.getAsync<UserService>(UserService);
+    const result = await userService.findOne('1');
+    expect(result).not.toBeUndefined();
+    expect(result).not.toBeNull();
   });
 });

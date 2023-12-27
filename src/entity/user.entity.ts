@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  Index,
   ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -15,10 +16,14 @@ export class User {
   id: number;
 
   @Column()
+  @Index()
   uuid: string;
 
   @Column()
   username: string;
+
+  @Column()
+  login_num: number;
 
   @ManyToMany(() => Goods, goods => goods.like_user)
   like_goods: Goods[];

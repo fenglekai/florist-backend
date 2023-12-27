@@ -10,6 +10,7 @@ import * as upload from '@midwayjs/upload';
 import * as crossDomain from '@midwayjs/cross-domain';
 import * as jwt from '@midwayjs/jwt';
 import * as passport from '@midwayjs/passport';
+import * as grpc from '@midwayjs/grpc';
 import { join } from 'path';
 import { DefaultErrorFilter } from './filter/default.filter';
 import { NotFoundFilter } from './filter/notfound.filter';
@@ -29,6 +30,7 @@ import { UnauthorizedFilter } from './filter/unauthorize.filter';
     crossDomain,
     jwt,
     passport,
+    grpc,
     {
       component: info,
       enabledEnvironment: ['local'],

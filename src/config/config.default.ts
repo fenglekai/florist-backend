@@ -2,6 +2,9 @@ import { MidwayConfig } from '@midwayjs/core';
 // eslint-disable-next-line node/no-unpublished-import
 import * as conf from './config.json';
 import { DefaultUploadFileMimeType } from '@midwayjs/upload';
+import { join } from 'path';
+
+const userBaseDir = join(__dirname, '../../../florist-user');
 
 export default {
   // use for cookie sign key, should change to your own and keep security
@@ -27,7 +30,7 @@ export default {
         database: conf['database'],
         // 第一次同步true,注意会数据丢失
         synchronize: true,
-        logging: true,
+        logging: false,
         timezone: '+08:00',
         dateStrings: true,
         entities: ['**/entity/*.entity{.ts,.js}'],
@@ -72,5 +75,14 @@ export default {
     auth: {
       authType: 'bearer',
     },
+  },
+  grpc: {
+    services: [
+      {
+        url: 'localhost:6565',
+        protoPath: join(userBaseDir, 'proto', 'user.proto'),
+        package: 'user',
+      },
+    ],
   },
 } as MidwayConfig;

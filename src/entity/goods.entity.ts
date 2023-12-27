@@ -9,10 +9,13 @@ import {
   ManyToOne,
   JoinColumn,
   DeleteDateColumn,
+  Index,
 } from 'typeorm';
 import { Category } from './category.entity';
 import { StaticTable } from './staticTable.entity';
+import { User } from './user.entity';
 
+@Index(['name', 'description'])
 @Entity('goods')
 export class Goods {
   @PrimaryGeneratedColumn()
@@ -38,6 +41,14 @@ export class Goods {
     inverseJoinColumn: { name: 'static_table_id' },
   })
   static_table: StaticTable[];
+
+  @ManyToMany(() => User, user => user.like_goods)
+  @JoinTable({
+    name: 'like_list',
+    joinColumn: { name: 'goods_id' },
+    inverseJoinColumn: { name: 'user_id' },
+  })
+  like_user: User[];
 
   @Column()
   like_num: number;

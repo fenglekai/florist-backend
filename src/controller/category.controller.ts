@@ -1,6 +1,5 @@
 import {
   Body,
-  Context,
   Controller,
   Del,
   Get,
@@ -13,6 +12,7 @@ import { CategoryService } from '../service/category.service';
 import { IdsDTO } from '../dto/goods.dto';
 import { CategoryDTO } from '../dto/category.dto';
 import { ApiBearerAuth } from '@midwayjs/swagger';
+import { Context } from '@midwayjs/koa';
 
 @ApiBearerAuth()
 @Controller('/cate')

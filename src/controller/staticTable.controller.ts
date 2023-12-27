@@ -1,6 +1,5 @@
 import {
   Body,
-  Context,
   Controller,
   Del,
   Fields,
@@ -14,6 +13,7 @@ import { IdsDTO } from '../dto/goods.dto';
 import { StaticTableService } from '../service/staticTable.service';
 import { FileItem, UploadDTO } from '../dto/staticTable.dto';
 import { ApiBearerAuth, ApiBody } from '@midwayjs/swagger';
+import { Context } from '@midwayjs/koa';
 
 @ApiBearerAuth()
 @Controller('/static')

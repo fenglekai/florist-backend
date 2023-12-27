@@ -53,6 +53,7 @@ export class JwtPassportMiddleware extends PassportMiddleware(JwtStrategy) {
   public match(ctx: Context): boolean {
     // const ignore = ctx.path.indexOf('/api/web/login') !== -1;
     const ignoreList = [
+      '/api/user/login',
       '/home/base',
       '/view/public',
       '/api/static/publicList',
@@ -60,6 +61,7 @@ export class JwtPassportMiddleware extends PassportMiddleware(JwtStrategy) {
       '/api/web/cateList',
       '/api/web/login',
       '/api/web/register',
+      '/api/web/productDetail',
     ];
     const ignore = ignoreList.some(item => ctx.path.indexOf(item) !== -1);
     return !ignore;

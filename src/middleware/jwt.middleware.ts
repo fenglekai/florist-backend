@@ -54,6 +54,7 @@ export class JwtPassportMiddleware extends PassportMiddleware(JwtStrategy) {
     // const ignore = ctx.path.indexOf('/api/web/login') !== -1;
     const ignoreList = [
       '/api/user/login',
+      '/api/user/verity',
       '/home/base',
       '/view/public',
       '/api/static/publicList',

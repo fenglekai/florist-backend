@@ -19,10 +19,10 @@ export class User {
   @Index()
   uuid: string;
 
-  @Column()
+  @Column({ comment: '用户名' })
   username: string;
 
-  @Column()
+  @Column({ comment: '登录次数' })
   login_num: number;
 
   @ManyToMany(() => Goods, goods => goods.like_user)

@@ -21,13 +21,13 @@ export class Goods {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ comment: '商品名称' })
   name: string;
 
-  @Column()
+  @Column({ comment: '描述' })
   description: string;
 
-  @Column()
+  @Column({ comment: '价格' })
   price: number;
 
   @ManyToOne(() => Category, cate => cate.goods)
@@ -50,7 +50,7 @@ export class Goods {
   })
   like_user: User[];
 
-  @Column()
+  @Column({ comment: '喜爱数量' })
   like_num: number;
 
   @CreateDateColumn({ type: 'timestamp' })

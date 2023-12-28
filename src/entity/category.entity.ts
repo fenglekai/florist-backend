@@ -14,7 +14,7 @@ export class Category {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ comment: '分类名称' })
   name: string;
 
   @OneToMany(() => Goods, goods => goods.cate)

@@ -14,7 +14,7 @@ export class StaticTable {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ comment: '文件路径' })
   src: string;
 
   @ManyToMany(() => Goods, goods => goods.static_table)

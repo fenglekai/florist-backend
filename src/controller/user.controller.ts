@@ -16,13 +16,13 @@ export class UserController {
   async login(@Body() user: UserDTO) {
     const { username, password } = user;
     const data = await this.userService.login(username, password);
-    this.ctx.set('authorization', data.authorization);
-    return data;
+    this.ctx.set('authorization', 'Bearer ' + data.authorization);
+    return { success: true, message: 'OK', data };
   }
 
   @Get('/verify')
   async verify(@Query('code') code: string) {
     const data = this.userService.verify(code);
-    return data;
+    return { success: true, message: 'OK', data };
   }
 }

@@ -1,7 +1,7 @@
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
-import { Inject, Provide } from '@midwayjs/core';
+import { Inject, Provide, httpError } from '@midwayjs/core';
 import { user } from '../domain/user';
 import { Clients } from '@midwayjs/grpc';
 
@@ -33,29 +33,37 @@ export class UserService {
   }
 
   async login(username: string, password: string) {
-    const greeterService =
-      this.grpcClients.getService<user.GreeterClient>('user.Greeter');
-    const result = await greeterService.login().sendMessage({
-      username,
-      password,
-    });
-    const { userId, authorization } = result.data;
-    let findUser = await this.findOne(userId);
-    if (!findUser) {
-      findUser = await this.add(userId, username);
-    } else {
-      findUser.login_num++;
-      await this.userModel.save(findUser);
+    try {
+      const greeterService =
+        this.grpcClients.getService<user.GreeterClient>('user.Greeter');
+      const result = await greeterService.login().sendMessage({
+        username,
+        password,
+      });
+      const { userId, authorization } = result.data;
+      let findUser = await this.findOne(userId);
+      if (!findUser) {
+        findUser = await this.add(userId, username);
+      } else {
+        findUser.login_num++;
+        await this.userModel.save(findUser);
+      }
+      return { ...findUser, authorization };
+    } catch (error) {
+      throw new httpError.BadRequestError(error.details);
     }
-    return { ...findUser, authorization };
   }
 
   async verify(code: string) {
-    const greeterService =
-      this.grpcClients.getService<user.GreeterClient>('user.Greeter');
-    const result = await greeterService.verify().sendMessage({
-      code,
-    });
-    return result;
+    try {
+      const greeterService =
+        this.grpcClients.getService<user.GreeterClient>('user.Greeter');
+      const result = await greeterService.verify().sendMessage({
+        code,
+      });
+      return result;
+    } catch (error) {
+      throw new httpError.BadRequestError(error.details);
+    }
   }
 }
